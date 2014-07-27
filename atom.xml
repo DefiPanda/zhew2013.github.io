@@ -4,7 +4,7 @@
   <title><![CDATA[418 I'm a teapot]]></title>
   <link href="http://jw2013.github.io/atom.xml" rel="self"/>
   <link href="http://jw2013.github.io/"/>
-  <updated>2014-07-26T21:06:22-07:00</updated>
+  <updated>2014-07-26T21:18:55-07:00</updated>
   <id>http://jw2013.github.io/</id>
   <author>
     <name><![CDATA[jw2013]]></name>
@@ -41,7 +41,7 @@
 </span><span class='line'>    for i in range(len(A)):
 </span><span class='line'>        if A[i] != i + 1:
 </span><span class='line'>            return i + 1
-</span><span class='line'>    return i + 2</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>    return len(A) + 1</span></code></pre></td></tr></table></div></figure>
 
 
 <p>To my surprise, the above code runs forever for input [2,1]. I did a bit debugging and found out <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> never swap the value correctly. That line is supposed to make <code>[2,1]</code> into <code>[1,2]</code> in the first iteration of while loop. But instead, after execution of that line the array <code>A</code> is still <code>[1,2]</code>.</p>
