@@ -4,7 +4,7 @@
   <title><![CDATA[418 I'm a teapot]]></title>
   <link href="http://jw2013.github.io/atom.xml" rel="self"/>
   <link href="http://jw2013.github.io/"/>
-  <updated>2014-07-26T22:23:35-07:00</updated>
+  <updated>2014-07-26T22:26:29-07:00</updated>
   <id>http://jw2013.github.io/</id>
   <author>
     <name><![CDATA[jw2013]]></name>
@@ -46,11 +46,11 @@
 
 <p>To my surprise, the above code runs forever for input [2,1]. I did a bit debugging and found out <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> never swap the value correctly. That line is supposed to make <code>[2,1]</code> into <code>[1,2]</code> in the first iteration of while loop. But instead, after execution of that line the array <code>A</code> is still <code>[2,1]</code>.</p>
 
-<p>Totally puzzled, I change <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> into <code>A[A[i] - 1], A[i] = A[i], A[A[i] - 1]</code> instead. Guess what? The modified code passed all test cases.</p>
+<p>Totally puzzled, I changed <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> into <code>A[A[i] - 1], A[i] = A[i], A[A[i] - 1]</code> instead. Guess what? The modified code passed all test cases.</p>
 
-<p>Unbelieved by the result, I am so intrigued and dicided to find out why.</p>
+<p>Unbelieved by the result, I was so intrigued and dicided to find out why.</p>
 
-<p>So I first write a simple function as follows:</p>
+<p>So I first wrote a simple function as follows:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
