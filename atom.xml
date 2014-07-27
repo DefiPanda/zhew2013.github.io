@@ -4,7 +4,7 @@
   <title><![CDATA[418 I'm a teapot]]></title>
   <link href="http://jw2013.github.io/atom.xml" rel="self"/>
   <link href="http://jw2013.github.io/"/>
-  <updated>2014-07-26T21:18:55-07:00</updated>
+  <updated>2014-07-26T21:25:20-07:00</updated>
   <id>http://jw2013.github.io/</id>
   <author>
     <name><![CDATA[jw2013]]></name>
@@ -172,7 +172,7 @@
 </span><span class='line'>    return A</span></code></pre></td></tr></table></div></figure>
 
 
-<p>While GIL can protect the read-write disaster in terms of concurrency, within one thread it is a programmer&rsquo;s job to make sure the variables read-write is written in a desired way, especially in some subtle cases. Sometimes the language implementation is not in the way you expected, but it is quite an interesting lesson at least for me to learn.</p>
+<p>Sometimes the language implementation of variable evaluation order is not in the way you expected, but it is quite an interesting lesson at least for me to learn.</p>
 ]]></content>
   </entry>
   
