@@ -102,3 +102,6 @@ def test3():
 ```
 
 Sometimes the language implementation of variable evaluation order is not in the way you expected, but it is quite an interesting lesson at least for me to learn.
+
+Discuss it on Hacker News:
+https://news.ycombinator.com/item?id=8091943
