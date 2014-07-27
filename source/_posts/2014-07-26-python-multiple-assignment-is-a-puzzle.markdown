@@ -21,7 +21,7 @@ def firstMissingPositive(A):
     return len(A) + 1
 ```
 
-To my surprise, the above code runs forever for input [2,1]. I did a bit debugging and found out `A[i], A[A[i] - 1] = A[A[i] - 1], A[i]` never swap the value correctly. That line is supposed to make `[2,1]` into `[1,2]` in the first iteration of while loop. But instead, after execution of that line the array `A` is still `[1,2]`.
+To my surprise, the above code runs forever for input [2,1]. I did a bit debugging and found out `A[i], A[A[i] - 1] = A[A[i] - 1], A[i]` never swap the value correctly. That line is supposed to make `[2,1]` into `[1,2]` in the first iteration of while loop. But instead, after execution of that line the array `A` is still `[2,1]`.
 
 Totally puzzled, I change `A[i], A[A[i] - 1] = A[A[i] - 1], A[i]` into `A[A[i] - 1], A[i] = A[i], A[A[i] - 1]` instead. Guess what? The modified code passed all test cases.
 
