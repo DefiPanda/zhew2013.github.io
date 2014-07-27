@@ -1,0 +1,319 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>418 I'm a teapot</title>
+  <meta name="author" content="jw2013">
+
+  
+  <meta name="description" content="This afternoon I was working on a coding challenge on an online judge for finding the first missing positive from an array. For example, the first &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://jw2013.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="418 I'm a teapot" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/libs/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="//fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="//fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">418 I'm a teapot</a></h1>
+  
+    <h2>Random posts of jw2013</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="https://www.google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:jw2013.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2014/07/26/python-multiple-assignment-is-a-puzzle/">Python Multiple Assignment Is a Puzzle</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-26T19:12:16-07:00" pubdate data-updated="true">Jul 26<sup>th</sup>, 2014</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>This afternoon I was working on a coding challenge on an online judge for finding the first missing positive from an array. For example, the first missing positive of [4,2,5,7,1] is 3. The problem is pretty straightford and solvable in O(n) time and O(1) space. So without much thought I wrote out the first iteration of code:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>def firstMissingPositive(A):
+</span><span class='line'>    i = 0
+</span><span class='line'>    while i &lt; len(A):
+</span><span class='line'>        if A[i] &gt; 0 and A[i] - 1 &lt; len(A) and A[A[i] - 1] != A[i]:
+</span><span class='line'>            A[i], A[A[i] - 1] = A[A[i] - 1], A[i]
+</span><span class='line'>        else:
+</span><span class='line'>            i += 1
+</span><span class='line'>    for i in range(len(A)):
+</span><span class='line'>        if A[i] != i + 1:
+</span><span class='line'>            return i + 1
+</span><span class='line'>    return len(A) + 1</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To my surprise, the above code runs forever for input [2,1]. I did a bit debugging and found out <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> never swap the value correctly. That line is supposed to make <code>[2,1]</code> into <code>[1,2]</code> in the first iteration of while loop. But instead, after execution of that line the array <code>A</code> is still <code>[2,1]</code>.</p>
+
+<p>Totally puzzled, I changed <code>A[i], A[A[i] - 1] = A[A[i] - 1], A[i]</code> into <code>A[A[i] - 1], A[i] = A[i], A[A[i] - 1]</code> instead. Guess what? The modified code passed all test cases.</p>
+
+<p>Unbelieved by the result, I was so intrigued and dicided to find out why.</p>
+
+<p>So I first wrote a simple function as follows:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># This one will fail
+</span><span class='line'>def test1():
+</span><span class='line'>    A = [2,1]
+</span><span class='line'>    A[0], A[A[0] - 1] = A[A[0] - 1], A[0]
+</span><span class='line'>    return A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>CPython has a disassembler library to turn Python bytecode into human readable strings (<a href="https://docs.python.org/2/library/dis.html">https://docs.python.org/2/library/dis.html</a>). So I use that to transform the bytecode of above code to following:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>  0 LOAD_CONST               1 (2)
+</span><span class='line'>  3 LOAD_CONST               2 (1)
+</span><span class='line'>  6 BUILD_LIST               2
+</span><span class='line'>  9 STORE_FAST               0 (A)   # A = [2, 1]
+</span><span class='line'>
+</span><span class='line'> 12 LOAD_FAST                0 (A)
+</span><span class='line'> 15 LOAD_FAST                0 (A)
+</span><span class='line'> 18 LOAD_CONST               3 (0)
+</span><span class='line'> 21 BINARY_SUBSCR       
+</span><span class='line'> 22 LOAD_CONST               2 (1)
+</span><span class='line'> 25 BINARY_SUBTRACT     
+</span><span class='line'> 26 BINARY_SUBSCR                    # A[A[0] - 1]
+</span><span class='line'> 27 LOAD_FAST                0 (A)
+</span><span class='line'> 30 LOAD_CONST               3 (0)
+</span><span class='line'> 33 BINARY_SUBSCR                    # A[0]
+</span><span class='line'> 34 ROT_TWO                          # Swap top two stack elements, 
+</span><span class='line'>                                     # now 1 (A[A[0] - 1] = A[2 - 1] = 1) is at top, 
+</span><span class='line'>                                     # and 2 (A[0] = 2) is at the second of top
+</span><span class='line'> 35 LOAD_FAST                0 (A)
+</span><span class='line'> 38 LOAD_CONST               3 (0)
+</span><span class='line'> 41 STORE_SUBSCR                     # Store top stack element 1 to A[0], 
+</span><span class='line'>                                     # now A = [1, 1], and 1 is removed 
+</span><span class='line'>                                     # from stack and 2 is at the top of stack
+</span><span class='line'> 42 LOAD_FAST                0 (A)
+</span><span class='line'> 45 LOAD_FAST                0 (A)
+</span><span class='line'> 48 LOAD_CONST               3 (0)
+</span><span class='line'> 51 BINARY_SUBSCR                    # Load A[0], notice now A[0] == 1
+</span><span class='line'> 52 LOAD_CONST               2 (1)
+</span><span class='line'> 55 BINARY_SUBTRACT                  # Load A[A[0] - 1] = A[1 - 1] = A[0]
+</span><span class='line'> 56 STORE_SUBSCR                     # Store top stack element 2 to A[0], 
+</span><span class='line'>                                     # now A = [2, 1]. We are resetting A[0] back to 2!
+</span><span class='line'>
+</span><span class='line'> 57 LOAD_FAST                0 (A)
+</span><span class='line'> 60 RETURN_VALUE                     # Return A</span></code></pre></td></tr></table></div></figure>
+
+
+<p></p>
+
+<p>The key insight on what&rsquo;s going on inside <code>A[0], A[A[0] - 1] = A[A[0] - 1], A[0]</code> is the indices on the left side (<code>0</code> of <code>A[0]</code> and <code>A[0] - 1</code> of <code>A[A[0] - 1]</code>) is evaluated NOT before the assignment of the value, but in the process of multiple assignment. We eval the right-hand side values first (<code>A[A[0] - 1]</code> => 1, <code>A[0]</code> => 2), then swap the top 2 elements in stack, assign the evaluated values stored in the stack (2 on top with 1 belows it) to the left-hand variables, from left to right. So <code>A[0]</code> on the left is expectedly assigned to 1. But <code>A[A[0] - 1]</code> now uses updated value of <code>A[0]</code>, thus <code>A[A[0] - 1]</code> now equals to <code>A[1 - 1]</code> = <code>A[0]</code>, so instead of assigning 2 to <code>A[1]</code>, we assign it to <code>A[0]</code>.</p>
+
+<p>Notice if all left-hand side incides are evaluated before multiple assignment, <code>A[A[0] - 1]</code> will always be the same as <code>A[2 - 1]</code> = <code>A[1]</code> in the multiple assignment process, and we will get the desired result.</p>
+
+<p>So how to solve this problem? Easy, if we don&rsquo;t want the later read index to be written upon first, we can just make a copy of index first:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Success! If we assign index to a variable
+</span><span class='line'>def test2():
+</span><span class='line'>    A = [2,1]
+</span><span class='line'>    x = A[0] - 1
+</span><span class='line'>    A[0], A[x] = A[x], A[0]
+</span><span class='line'>    return A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or, if one index depend on a value that can possibly be changed through the multiple assignment process, just assign the dependent value (<code>A[A[0] - 1]</code>) first before the assignment of the value it depends on (<code>A[0]</code>).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'># Also suceeded if we change the swapping order
+</span><span class='line'>def test3():
+</span><span class='line'>    A = [2,1]
+</span><span class='line'>    A[A[0] - 1], A[0] = A[0], A[A[0] - 1]
+</span><span class='line'>    return A</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Sometimes the language implementation of variable evaluation order is not in the way you expected, but it is quite an interesting lesson at least for me to learn.</p>
+
+<p>Discuss it on HN:<br/>
+<a href="https://news.ycombinator.com/item?id=8091943">https://news.ycombinator.com/item?id=8091943</a></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2014/07/26/python-multiple-assignment-is-a-puzzle/">Python Multiple Assignment Is a Puzzle</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2014 - jw2013 -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
