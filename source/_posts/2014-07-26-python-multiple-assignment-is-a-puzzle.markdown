@@ -76,7 +76,7 @@ CPython has a disassembler library to turn Python bytecode into human readable s
  60 RETURN_VALUE                     # Return A
 ```    
 
-The key insight on what's going on inside `A[0], A[A[0] - 1] = A[A[0] - 1], A[0]` is the indices on the left side (`0` of `A[0]` and `A[0] - 1` of `A[A[0] - 1]`) is evaluated NOT before the assignment of the value, but in the process of multiple assignment. We eval the right-hand side values first (`A[A[0] - 1]` => 1, `A[0]` = 2), then swap the top 2 elements in stack, assign the evaluated values stored in the stack (2 on top with 1 belows it) to the left-hand variables, from left to right. So A[0] on left is expectedly assigned to 1. But `A[A[0] - 1]` is equal to `A[1 - 1]` = `A[0]` now, so instead of assigning 2 to `A[1]`, we assign it to `A[0]`.
+The key insight on what's going on inside `A[0], A[A[0] - 1] = A[A[0] - 1], A[0]` is the indices on the left side (`0` of `A[0]` and `A[0] - 1` of `A[A[0] - 1]`) is evaluated NOT before the assignment of the value, but in the process of multiple assignment. We eval the right-hand side values first (`A[A[0] - 1]` => 1, `A[0]` => 2), then swap the top 2 elements in stack, assign the evaluated values stored in the stack (2 on top with 1 belows it) to the left-hand variables, from left to right. So `A[0]` on the left is expectedly assigned to 1. But `A[A[0] - 1]` now uses updated value of `A[0]`, thus `A[A[0] - 1]` now equals to `A[1 - 1]` = `A[0]`, so instead of assigning 2 to `A[1]`, we assign it to `A[0]`.
 
 Notice if all left-hand side incides are evaluated before multiple assignment, `A[A[0] - 1]` will always be the same as `A[2 - 1]` = `A[1]` in the multiple assignment process, and we will get the desired result.
 
