@@ -2,10 +2,10 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
 
   <title><![CDATA[418 I'm a teapot]]></title>
-  <link href="http://jw2013.github.io//atom.xml" rel="self"/>
-  <link href="http://jw2013.github.io//"/>
-  <updated>2014-07-26T20:05:14-07:00</updated>
-  <id>http://jw2013.github.io//</id>
+  <link href="http://jw2013.github.io/atom.xml" rel="self"/>
+  <link href="http://jw2013.github.io/"/>
+  <updated>2014-07-26T21:06:22-07:00</updated>
+  <id>http://jw2013.github.io/</id>
   <author>
     <name><![CDATA[jw2013]]></name>
     
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Python Multiple Assignment Is a Puzzle]]></title>
-    <link href="http://jw2013.github.io//blog/2014/07/26/python-multiple-assignment-is-a-puzzle/"/>
+    <link href="http://jw2013.github.io/blog/2014/07/26/python-multiple-assignment-is-a-puzzle/"/>
     <updated>2014-07-26T19:12:16-07:00</updated>
-    <id>http://jw2013.github.io//blog/2014/07/26/python-multiple-assignment-is-a-puzzle</id>
+    <id>http://jw2013.github.io/blog/2014/07/26/python-multiple-assignment-is-a-puzzle</id>
     <content type="html"><![CDATA[<p>This afternoon I was working on a coding challenge on an online judge for finding the first missing positive from an array. For example, the first missing positive of [4,2,5,7,1] is 3. The problem is pretty straightford and solvable in O(n) time and O(1) space. So without much thought I wrote out the first iteration of code:</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
